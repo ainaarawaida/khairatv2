@@ -16,7 +16,7 @@
  * Plugin Name:       khairat
  * Plugin URI:        https://khairat
  * Description:       khairat
- * Version:           1.0.0
+ * Version:           2.0.0
  * Author:            khairat
  * Author URI:        https://khairat
  * License:           GPL-2.0+

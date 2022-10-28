@@ -30,7 +30,7 @@
     loading = true;
     let apidata = new Promise(function (myResolve, myReject) {
       let dataArray = new FormData();
-      dataArray.append("action", "SenaraiAhli");
+      dataArray.append("action", "SenaraiAhliTidakAktif");
       fetch(myapiurl, {
         method: "POST",
         body: dataArray,
@@ -153,28 +153,14 @@
     downloadAnchorNode.click();
     downloadAnchorNode.remove();
   }
-
-  const rowClicked = () => {
-    console.log("dsds");
-    alert("ssss");
-  };
 </script>
 
 <main>
   <div class="container-fluid px-4">
-    <h1 class="mt-4">Senarai Ahli</h1>
+    <h1 class="mt-4">Senarai Ahli Tidak Aktif</h1>
     <ol class="breadcrumb mb-4">
-      <li class="breadcrumb-item active">Senarai Ahli</li>
+      <li class="breadcrumb-item active">Senarai Ahli Tidak Aktif</li>
     </ol>
-    <div class="row">
-      <div class="col">
-        <Alert color="warning" dismissible
-          >Semua ahli yang berdaftar dan telah diluluskan akan dipaparkan
-          dibahagian ini. <br />Pentadbir perlu klik <i>edit</i> untuk melihat perincian
-          ahli, bayaran, tanggungan dan faedah khairat yang diterima.</Alert
-        >
-      </div>
-    </div>
 
     {#if Object.keys(passdata).length != 0}
       <Alert color="info" dismissible>{passdata.passdata}</Alert>
@@ -189,10 +175,10 @@
       >&nbsp;
       <a
         class="btn btn-danger"
-        href="Senarai Ahli tidak Aktif"
+        href="Senarai Ahli Aktif"
         on:click|preventDefault={() =>
-          dispatch("menuChange", "Ahli Khairat - Senarai Ahli Tidak Aktif")}
-        >Senarai Ahli Tidak Aktif</a
+          dispatch("menuChange", "Ahli Khairat - Senarai Ahli")}
+        >Senarai Ahli Aktif</a
       >
     </div>
     <div class="m-2" />
