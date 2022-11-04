@@ -22,21 +22,38 @@ function khai_check_user(){
     if($_POST['action'] && $_POST['action'] === 'MaklumatProfil'){
         require_once KHAI_PATH . '/public/api/MaklumatProfil.php' ;
     }
-    if($_POST['action'] && $_POST['action'] === 'MaklumatKariah'){
+    else if($_POST['action'] && $_POST['action'] === 'MaklumatKariah'){
         require_once KHAI_PATH . '/public/api/MaklumatKariah.php' ;
     }
-    if($_POST['action'] && $_POST['action'] === 'SenaraiAhli'){
+    else if($_POST['action'] && $_POST['action'] === 'SenaraiAhli'){
         require_once KHAI_PATH . '/public/api/SenaraiAhli.php' ;
     }
-    if($_POST['action'] && $_POST['action'] === 'SenaraiAhliTidakAktif'){
+    else if($_POST['action'] && $_POST['action'] === 'TidakAktifAhli'){
+        require_once KHAI_PATH . '/public/api/TidakAktifAhli.php' ;
+    }
+    else if($_POST['action'] && $_POST['action'] === 'DeleteAhli'){
+        require_once KHAI_PATH . '/public/api/DeleteAhli.php' ;
+    }
+    else if($_POST['action'] && $_POST['action'] === 'SenaraiAhliTidakAktif'){
         require_once KHAI_PATH . '/public/api/SenaraiAhliTidakAktif.php' ;
     }
-    if($_POST['action'] && $_POST['action'] === 'DaftarAhli'){
+    else if($_POST['action'] && $_POST['action'] === 'DaftarAhli'){
         require_once KHAI_PATH . '/public/api/DaftarAhli.php' ;
     }
-    if($_POST['action'] && $_POST['action'] === 'KemaskiniAhli'){
+    else if($_POST['action'] && $_POST['action'] === 'KemaskiniAhli'){
         require_once KHAI_PATH . '/public/api/KemaskiniAhli.php' ;
     }
+    else if($_POST['action'] && $_POST['action'] === 'TambahAhliTanggungan'){
+        require_once KHAI_PATH . '/public/api/TambahAhliTanggungan.php' ;
+    }
+    else if($_POST['action'] && $_POST['action'] === 'KemaskiniAhliTanggungan'){
+        require_once KHAI_PATH . '/public/api/KemaskiniAhliTanggungan.php' ;
+    }
+    else if($_POST['action'] && $_POST['action'] === 'DeleteTanggungan'){
+        require_once KHAI_PATH . '/public/api/DeleteTanggungan.php' ;
+    }
+
+    
 
 
     

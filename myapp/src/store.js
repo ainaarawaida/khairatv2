@@ -1,4 +1,4 @@
-import { writable } from 'svelte/store'
+import { writable, get } from 'svelte/store'
 
 export let data = writable({
     khai_user:{
@@ -6,5 +6,9 @@ export let data = writable({
         stage_daftar: '0'
         }
     },
-    store:[]
+    store:{
+        dataid:""
+    }
 })
+
+export let getdata = get(data);

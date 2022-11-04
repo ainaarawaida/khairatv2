@@ -80,7 +80,7 @@ $get_senarai_ahli = $wpdb->get_results(
 
    
     WHERE 
-    e.meta_value = '3'
+    e.meta_value = '2'
     AND b.ID = '{$GLOBALS['khai_temp_data']['khai_user']->data->kariah_id}'
     ") 
 );

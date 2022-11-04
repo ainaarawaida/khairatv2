@@ -6,7 +6,7 @@
   import "./assets/js/fontawesome.js";
   import "./assets/js/bootstrap.bundle.min.js";
 
-  // import './assets/js/luqscripts.js';
+  // import "./assets/js/luqscripts.js";
   import Header from "./parts/Header.svelte";
   import Sidebar from "./parts/Sidebar.svelte";
   import RightSidebar from "./parts/RightSidebar.svelte";
@@ -22,6 +22,8 @@
   import SenaraiAhliTidakAktif from "./parts/AhliKhairat/SenaraiAhliTidakAktif.svelte";
   import DaftarAhli from "./parts/AhliKhairat/DaftarAhli.svelte";
   import KemaskiniAhli from "./parts/AhliKhairat/KemaskiniAhli.svelte";
+
+  import JenisYuran from "./parts/Yuran/JenisYuran.svelte";
 
   //test
   // import Test from './Test.svelte';
@@ -96,7 +98,7 @@
     }
   });
 
-  $: console.log("activeMenu", activeMenu);
+  // $: console.log("activeMenu", activeMenu);
   $: khai_user.data.stage_daftar = khai_user.data.stage_daftar;
 </script>
 
@@ -135,6 +137,8 @@
         <KemaskiniAhli {passdata} on:menuChange={menuChange} />
       {:else if activeMenu === "Ahli Khairat - Daftar Ahli"}
         <DaftarAhli on:menuChange={menuChange} />
+      {:else if activeMenu === "Jenis Yuran"}
+        <JenisYuran />
       {/if}
 
       <Footer />

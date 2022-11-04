@@ -38,7 +38,6 @@
         .then((response) => response.json())
         .then((result) => {
           myResolve(result);
-          console.log();
         })
         .catch((error) => console.log("error", error));
     });
@@ -115,6 +114,7 @@
       ) {
         // console.log(e.target.getAttribute('data-pass'));
         let dataid = e.target.getAttribute("data-pass");
+        delahli(dataid);
         // dispatch("menuChange", ["Ahli Khairat - Kemaskini Ahli", dataid] );
       }
       if (
@@ -123,7 +123,7 @@
       ) {
         // console.log(e.target.parentElement.parentElement.getAttribute('data-pass'));
         let dataid = e.target.parentElement.getAttribute("data-pass");
-        alert("delete");
+        delahli(dataid);
         // dispatch("menuChange", ["Ahli Khairat - Kemaskini Ahli", dataid] );
       }
       if (
@@ -133,10 +133,34 @@
         // console.log(e.target.parentElement.parentElement.getAttribute('data-pass'));
         let dataid =
           e.target.parentElement.parentElement.getAttribute("data-pass");
-        alert("delete");
+        delahli(dataid);
       }
     });
   });
+
+  const delahli = async (dataid) => {
+    let apidata = new Promise(function (myResolve, myReject) {
+      let dataArray = new FormData();
+      dataArray.append("action", "DeleteAhli");
+      dataArray.append("ID", JSON.parse(atob(dataid)));
+      fetch(myapiurl, {
+        method: "POST",
+        body: dataArray,
+      })
+        .then((response) => response.json())
+        .then((result) => {
+          myResolve(result);
+        })
+        .catch((error) => console.log("error", error));
+    });
+
+    passdata = JSON.parse(await apidata).submitpost;
+    // console.log("passdata", JSON.parse(atob(dataid)));
+    var result = ptData.filter((wordx) => {
+      return wordx.ID != JSON.parse(atob(dataid));
+    });
+    ptData = result;
+  };
 
   function exportJsonData(e) {
     MyPowerTable.closeMenu(e);
@@ -185,7 +209,7 @@
     <div class="card mb-4">
       <div class="card-header">
         <i class="fas fa-table me-1" />
-        Senarai Aktif Ahli Khairat
+        Senarai Ahli Khairat Tidak Aktif
       </div>
       <div class="card-body">
         <div class="MuonW PowerTable">

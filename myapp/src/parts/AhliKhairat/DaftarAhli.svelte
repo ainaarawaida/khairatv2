@@ -113,7 +113,7 @@
     visible = false;
     submitpost.error = [];
     submitpost.post = false;
-    console.log("submitpost", submitpost);
+    // console.log("submitpost", submitpost);
   };
 </script>
 
@@ -152,7 +152,7 @@
           bind:value={fields.kariah_id}
         />
         <div class="row">
-          <div class="col">
+          <div class="col-sm">
             <label class="form-label" for="namaPenuh">Nama Penuh</label>
             <input
               class="form-control {submitpost.error.findIndex((p) =>
@@ -171,7 +171,7 @@
               Nama Penuh is required.
             </div>
           </div>
-          <div class="col">
+          <div class="col-sm">
             <label class="form-label" for="emel">Emel</label>
             <input
               class="form-control {submitpost.error.findIndex((p) =>
@@ -196,7 +196,7 @@
         </div>
 
         <div class="row">
-          <div class="col">
+          <div class="col-sm">
             <label class="form-label" for="katalaluan"
               >Katalaluan <i>(Kosongkan jika tidak ingin ubah)</i></label
             >
@@ -219,7 +219,7 @@
               Katalaluan is required.
             </div>
           </div>
-          <div class="col">
+          <div class="col-sm">
             <label class="form-label" for="katalaluanSemula"
               >Katalaluan Semula <i>(Kosongkan jika tidak ingin ubah)</i></label
             >
@@ -245,7 +245,7 @@
         </div>
 
         <div class="row">
-          <div class="col">
+          <div class="col-sm">
             <label class="form-label" for="noKadPengenalanBaru"
               >No. Kad Pengenalan Baru</label
             >
@@ -271,7 +271,7 @@
               No. Kad Pengenalan Baru is required.
             </div>
           </div>
-          <div class="col">
+          <div class="col-sm">
             <label class="form-label" for="nomborTelefon">Nombor Telefon</label>
             <input
               class="form-control {submitpost.error.findIndex((p) =>
@@ -296,7 +296,7 @@
         </div>
 
         <div class="row">
-          <div class="col">
+          <div class="col-sm">
             <label class="form-label" for="tarikhDaftar">Tarikh Daftar</label>
             <input
               class="form-control {submitpost.error.findIndex((p) =>
@@ -318,7 +318,7 @@
               Tarikh Daftar is required.
             </div>
           </div>
-          <div class="col">
+          <div class="col-sm">
             <label class="form-label" for="nomborKeahlian"
               >Nombor Keahlian (Kosongkan jika ingin auto)</label
             >
@@ -344,7 +344,7 @@
         </div>
 
         <div class="row">
-          <div class="col">
+          <div class="col-sm">
             <label class="form-label" for="jenisAhliView">Jenis Ahli</label>
             <select
               bind:value={fields.jenisAhli}
@@ -361,7 +361,7 @@
               <option value="3">Ahli Asnaf</option>
             </select>
           </div>
-          <div class="col">
+          <div class="col-sm">
             <label class="form-label" for="namaKariah">Kariah</label>
             <input
               readonly

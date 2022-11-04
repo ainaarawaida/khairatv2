@@ -17,7 +17,9 @@ if(!$_POST['noKadPengenalanBaru']){ //dapatkan dulu maklumat sebelum paparkan fo
         e.meta_value as stage_daftar,
         a.user_registered, 
         a.user_email,
-        f.meta_value as role
+        f.meta_value as role,
+        g.meta_value as alamat,
+        h.meta_value as catatan
        
         FROM {$wpdb->prefix}users a 
         LEFT JOIN 
@@ -41,6 +43,12 @@ if(!$_POST['noKadPengenalanBaru']){ //dapatkan dulu maklumat sebelum paparkan fo
         LEFT JOIN 
         (SELECT user_id, meta_value FROM {$wpdb->prefix}usermeta WHERE meta_key = 'role' ) f 
         ON a.ID = f.user_id
+        LEFT JOIN 
+        (SELECT user_id, meta_value FROM {$wpdb->prefix}usermeta WHERE meta_key = 'alamat' ) g 
+        ON a.ID = g.user_id
+        LEFT JOIN 
+        (SELECT user_id, meta_value FROM {$wpdb->prefix}usermeta WHERE meta_key = 'catatan' ) h 
+        ON a.ID = h.user_id
     
        
         WHERE 
@@ -71,6 +79,8 @@ if(!$_POST['noKadPengenalanBaru']){ //dapatkan dulu maklumat sebelum paparkan fo
     if(!$check->errors){
         update_user_meta($check, 'noKadPengenalanBaru', $_POST['noKadPengenalanBaru']) ; 
         update_user_meta($check, 'nomborTelefon', $_POST['nomborTelefon']) ; 
+         update_user_meta($check, 'alamat', $_POST['alamat']) ; 
+          update_user_meta($check, 'catatan', $_POST['catatan']) ; 
         update_user_meta($check, 'stage_daftar', 1) ; 
         update_user_meta( $check, 'role', $_POST['jenisAhli'] );
         update_user_meta( $check, 'kariah_id', $_POST['kariah_id'] );
