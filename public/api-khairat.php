@@ -4,7 +4,7 @@ add_action( 'rest_api_init', 'khai_check_user');
 function khai_check_user(){
     global $wpdb ; 
     // $GLOBALS['khai_temp_data']['khai_user'] = wp_get_current_user(); //<- production
-    $GLOBALS['khai_temp_data']['khai_user'] =  get_user_by( 'id', 23 ); // development
+    $GLOBALS['khai_temp_data']['khai_user'] =  get_user_by( 'id', 14 ); // development
     $GLOBALS['khai_temp_data']['khai_user']->role = get_user_meta( $GLOBALS['khai_temp_data']['khai_user']->ID, 'role', true ) ;
     $GLOBALS['khai_temp_data']['khai_user']->stage_daftar = get_user_meta( $GLOBALS['khai_temp_data']['khai_user']->ID, 'stage_daftar', true ) ;
     $GLOBALS['khai_temp_data']['khai_user']->kariah_id = get_user_meta( $GLOBALS['khai_temp_data']['khai_user']->ID, 'kariah_id', true ) ;
@@ -51,6 +51,9 @@ function khai_check_user(){
     }
     else if($_POST['action'] && $_POST['action'] === 'DeleteTanggungan'){
         require_once KHAI_PATH . '/public/api/DeleteTanggungan.php' ;
+    } 
+    else if($_POST['action'] && $_POST['action'] === 'JenisYuran'){
+        require_once KHAI_PATH . '/public/api/JenisYuran.php' ;
     }
 
     

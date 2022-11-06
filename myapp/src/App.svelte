@@ -40,7 +40,7 @@
   let mybaseurl =
     import.meta.env.MODE !== "development"
       ? window.location.origin
-      : "http://khairat.test";
+      : "http://demo.test";
   setContext("mybaseurl", mybaseurl);
 
   let myapiurl = `${mybaseurl}/wp-json/api/v1/data`;
