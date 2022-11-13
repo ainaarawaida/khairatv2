@@ -74,7 +74,7 @@ class Khairat_Public {
 		 */
 
 		wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/khairat-public.css', array(), $this->version, 'all' );
-		$files = glob(KHAI_PATH . '/myapp/dist/assets/*.css');
+		$files = glob(KHAI_PATH . 'myapp/dist/assets/*.css');
 		
 		foreach ($files AS $key => $val){
 			wp_enqueue_style( 'svelte_my-app#'.$key , KHAI_URL.'/myapp/dist/assets/' . basename($val) , array(), null, 'all' );
@@ -101,10 +101,44 @@ class Khairat_Public {
 		 */
 
 		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/khairat-public.js', array( 'jquery' ), $this->version, false );
-		$files = glob(KHAI_PATH . '/myapp/dist/assets/*.js');
+		$files = glob(KHAI_PATH . 'myapp/dist/assets/*.js');
+		$files2 = glob(KHAI_PATH . 'myapp/dist/assets/vite/*.js');
+		$files3 = glob(KHAI_PATH . 'myapp/dist/assets/src/*.js');
+		$files4 = glob(KHAI_PATH . 'myapp/dist/assets/src/assets/js/*.js');
+		$files5 = glob(KHAI_PATH . 'myapp/dist/assets/src/parts/*.js');
+		$files6 = glob(KHAI_PATH . 'myapp/dist/assets/src/parts/MaklumatKariah/*.js');
+		$files7 = glob(KHAI_PATH . 'myapp/dist/assets/src/parts/AhliKhairat/*.js');
+		$files8 = glob(KHAI_PATH . 'myapp/dist/assets/src/parts/Yuran/*.js');
+		foreach($files AS $key => $val){
+			$allfile[] = ["base" => basename($val) , "path" => "myapp/dist/assets/"] ; 
+		}
+		foreach($files2 AS $key => $val){
+			$allfile[] = ["base" => basename($val) , "path" => "myapp/dist/assets/vite/"] ; 
+		}
+		foreach($files3 AS $key => $val){
+			$allfile[] = ["base" => basename($val) , "path" => "myapp/dist/assets/src/"] ; 
+		}
+		foreach($files4 AS $key => $val){
+			$allfile[] = ["base" => basename($val) , "path" => "myapp/dist/assets/src/assets/js/"] ; 
+		}
+		foreach($files5 AS $key => $val){
+			$allfile[] = ["base" => basename($val) , "path" => "myapp/dist/assets/src/parts/"] ;  
+		}
+		foreach($files6 AS $key => $val){
+			$allfile[] = ["base" => basename($val) , "path" => "myapp/dist/assets/src/parts/MaklumatKariah/"] ; 
+		}
+		foreach($files7 AS $key => $val){
+			$allfile[] = ["base" => basename($val) , "path" => "myapp/dist/assets/src/parts/AhliKhairat/"] ; 
+		}
+		foreach($files8 AS $key => $val){
+			$allfile[] = ["base" => basename($val) , "path" => "myapp/dist/assets/src/parts/Yuran/"] ; 
+		}
 		
-		foreach ($files AS $key => $val){
-			wp_enqueue_script( 'svelte_my-app#'.$key , KHAI_URL.'/myapp/dist/assets/' . basename($val) , array(), null, true );
+	
+		
+		foreach ($allfile AS $key => $val){
+			
+			wp_enqueue_script( 'svelte_my-app#'.$key , KHAI_URL.'/'.$val['path'] . $val['base'] , array(), null, true );
 		}
 		wp_localize_script( 'svelte_my-app#'.$key, 'frontend_ajax_object',
 			array( 
@@ -155,9 +189,10 @@ class Khairat_Public {
 
 	public function khai_template_redirect(){
 		global $wp ;
-
+		
 		if(isset($wp->query_vars) && isset($wp->query_vars['pagename']) && $wp->query_vars['pagename'] === 'my-account'){
 			if(wp_get_current_user()->ID !== 0 ){
+				
 				require_once KHAI_PATH . '/public/khairat.php' ;
 				exit();
 			}
@@ -180,6 +215,25 @@ class Khairat_Public {
 		}
 	}
 
+	public function khai_woocommerce_add_to_cart_validation( $passed, $added_product_id ) {
+		wc_empty_cart();
+		return $passed;
+	}
+
+	public function khai_woocommerce_add_to_cart_redirect() {
+		return wc_get_checkout_url();
+	}
+
+	public function khai_woocommerce_checkout_must_be_logged_in_message(){
+		return ;
+	}
+
+	public function khai_woocommerce_before_checkout_form($checkout){
+		if ( ! $checkout->is_registration_enabled() && $checkout->is_registration_required() && ! is_user_logged_in() ) {
+			echo 'You Must Login To Checkout <a href="'.home_url('my-account').'">Click Here to Login / Register </a>  ';
+			return;
+		}
+	}
 
 
 

@@ -20,9 +20,13 @@
   let visible = true;
   let unsubscribe;
   onMount(async () => {
-    unsubscribe = data.subscribe((value) => {
-      khai_user = value.khai_user;
+    let myPromise = new Promise(function (myResolve, myReject) {
+      unsubscribe = data.subscribe((value) => {
+        //   console.log(value.store.passdata);
+        myResolve(value); // when successful
+      });
     });
+    khai_user = (await myPromise).khai_user;
 
     let year = khai_user.data.user_registered.substring(0, 4);
     let month = khai_user.data.user_registered.substring(5, 7);
@@ -95,13 +99,18 @@
     });
 
     submitpost = JSON.parse(await apidata).submitpost;
-
     khai_user = JSON.parse(await apidata).khai_user;
-    submitpost.post = true;
 
-    data.update((currentPolls) => {
-      return { ...currentPolls, khai_user };
+    data.update((value) => {
+      return { ...value, khai_user };
     });
+
+    if (!khai_user.data.pakej) {
+      dispatch("menuChange", "Pilih Pakej");
+      submitpost.post = false;
+    } else {
+      submitpost.post = true;
+    }
   };
 
   const closealert = async () => {

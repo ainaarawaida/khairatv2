@@ -185,7 +185,15 @@ class Khairat {
 
 		//logout redirect
 		$this->loader->add_action('check_admin_referer', $plugin_public, 'khai_check_admin_referer', 10, 2);
-
+		$this->loader->add_filter( 'woocommerce_add_to_cart_redirect', $plugin_public, 'khai_woocommerce_add_to_cart_redirect' );
+		$this->loader->add_filter( 'woocommerce_add_to_cart_validation', $plugin_public, 'khai_woocommerce_add_to_cart_validation', 9999, 2 );
+	
+	
+		$this->loader->add_filter( 'woocommerce_checkout_must_be_logged_in_message', $plugin_public, 'khai_woocommerce_checkout_must_be_logged_in_message', 10);
+		$this->loader->add_action('woocommerce_before_checkout_form', $plugin_public, 'khai_woocommerce_before_checkout_form', 10,1);
+	
+	
+	
 	}
 
 	/**

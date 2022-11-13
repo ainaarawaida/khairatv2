@@ -45,8 +45,8 @@
 
     let apidata2 = new Promise(function (myResolve, myReject) {
       let dataArray = new FormData();
-      dataArray.append("action", "TambahAhliTanggungan");
-      dataArray.append("id", passdata);
+      dataArray.append("action", "UserTambahAhliTanggungan");
+      dataArray.append("id", khai_user.ID);
       dataArray.append("kariah_id", khai_user.data.kariah_id);
       fetch(myapiurl, {
         method: "POST",
@@ -63,7 +63,7 @@
     loading = false;
 
     fields = {
-      id: passdata,
+      id: khai_user.ID,
       kariah_id: khai_user.data.kariah_id,
     };
   });
@@ -98,7 +98,7 @@
 
       let apidata = new Promise(function (myResolve, myReject) {
         let dataArray = new FormData();
-        dataArray.append("action", "TambahAhliTanggungan");
+        dataArray.append("action", "UserTambahAhliTanggungan");
         dataArray.append("id", fields.id);
         dataArray.append("kariah_id", fields.kariah_id);
         dataArray.append("namaTanggungan", fields.namaTanggungan);
@@ -136,7 +136,7 @@
     } else if (e.target.getAttribute("id") == "UpdateTanggunganForm") {
       let apidata = new Promise(function (myResolve, myReject) {
         let dataArray = new FormData();
-        dataArray.append("action", "KemaskiniAhliTanggungan");
+        dataArray.append("action", "UserKemaskiniAhliTanggungan");
         dataArray.append("id", fields.id);
         dataArray.append("kariah_id", fields.kariah_id);
         dataArray.append("namaTanggungan", fields.namaTanggungan);
@@ -184,7 +184,7 @@
 
         let apidata = new Promise(function (myResolve, myReject) {
           let dataArray = new FormData();
-          dataArray.append("action", "DeleteTanggungan");
+          dataArray.append("action", "UserDeleteTanggungan");
           dataArray.append("id", fields.id);
           dataArray.append("kariah_id", fields.kariah_id);
           dataArray.append("senaraiTanggungan", JSON.stringify(tanggungans));
@@ -207,7 +207,6 @@
   };
 
   const toggle = (e) => {
-    // console.log(e.target);
     let getid = e.target.parentElement.getAttribute("data-id");
     if (getid == null) {
       getid = e.target.getAttribute("data-id");

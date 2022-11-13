@@ -2,13 +2,15 @@
   import { createEventDispatcher } from "svelte";
   let dispatch = createEventDispatcher();
   export let activeMenu;
+  import { getContext } from "svelte";
 
+  let mybaseurl = getContext("mybaseurl");
   // console.log("activeMenu",activeMenu)
 </script>
 
 <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
   <!-- Navbar Brand-->
-  <a class="navbar-brand ps-3" href="index.html">Start Bootstrap</a>
+  <a class="navbar-brand ps-3" href="index.html">Sistem Khairat</a>
   <!-- Sidebar Toggle-->
   <button
     class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0"
@@ -58,7 +60,11 @@
         </li>
         <li><a class="dropdown-item" href="#!">Activity Log</a></li>
         <li><hr class="dropdown-divider" /></li>
-        <li><a class="dropdown-item" href="#!">Logout</a></li>
+        <li>
+          <a class="dropdown-item" href="{mybaseurl}/wp-login.php?action=logout"
+            >Logout</a
+          >
+        </li>
       </ul>
     </li>
   </ul>

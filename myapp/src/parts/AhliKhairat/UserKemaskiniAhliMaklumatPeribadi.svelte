@@ -37,16 +37,16 @@
   onMount(async () => {
     let myPromise = new Promise(function (myResolve, myReject) {
       unsubscribe = data.subscribe((value) => {
-        //   console.log(value.store.passdata);
         myResolve(value); // when successful
       });
     });
     passdata = (await myPromise).store.passdata;
     khai_user = (await myPromise).khai_user;
+
     let apidata = new Promise(function (myResolve, myReject) {
       let dataArray = new FormData();
-      dataArray.append("action", "KemaskiniAhli");
-      dataArray.append("id", passdata);
+      dataArray.append("action", "UserKemaskiniAhli");
+      dataArray.append("id", khai_user.ID);
       dataArray.append("kariah_id", khai_user.data.kariah_id);
       fetch(myapiurl, {
         method: "POST",
@@ -65,7 +65,7 @@
     let day = submitpost.get_senarai_ahli[0].user_registered.substring(8, 10);
 
     fields = {
-      id: passdata,
+      id: khai_user.ID,
       kariah_id: khai_user.data.kariah_id,
       namaPenuh: submitpost.get_senarai_ahli[0].display_name,
       emel: submitpost.get_senarai_ahli[0].user_email,
@@ -91,7 +91,7 @@
   const submitHandler = async (e) => {
     submitpost.post = "";
     submitpost.error = [];
-    console.log(e.target.getAttribute("id"));
+    // console.log(e.target.getAttribute("id"));
     if (e.target.getAttribute("id") == "maklumatPeribadi") {
       if (fields.katalaluan !== fields.katalaluanSemula) {
         submitpost.error.push({
@@ -105,7 +105,7 @@
 
       let apidata = new Promise(function (myResolve, myReject) {
         let dataArray = new FormData();
-        dataArray.append("action", "KemaskiniAhli");
+        dataArray.append("action", "UserKemaskiniAhli");
         dataArray.append("id", fields.id);
         dataArray.append("kariah_id", fields.kariah_id);
         dataArray.append("namaPenuh", fields.namaPenuh);
@@ -133,6 +133,12 @@
       });
 
       submitpost = JSON.parse(await apidata).submitpost;
+      khai_user = JSON.parse(await apidata).khai_user;
+
+      data.update((value) => {
+        return { ...value, khai_user };
+      });
+
       submitpost.post = "true";
 
       if (submitpost.ID != undefined) {
@@ -365,6 +371,7 @@
       <div class="col-sm">
         <label class="form-label" for="jenisAhliView">Jenis Ahli</label>
         <select
+          disabled
           bind:value={fields.jenisAhli}
           class="form-control"
           id="jenisAhli"
@@ -427,6 +434,7 @@
       <div class="col-sm">
         <label class="form-label" for="statusAhli">Status Ahli</label>
         <select
+          disabled
           bind:value={fields.statusAhli}
           class="form-control"
           id="statusAhli"

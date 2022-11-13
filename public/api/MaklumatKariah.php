@@ -82,7 +82,7 @@ if($check_author_site_name && $check_exist_post_title && $check_exist_site_name)
             
             wp_update_post( $my_post );
             update_post_meta($my_post['ID'], 'alamatKariah', $_POST['alamatKariah']) ;  
-            update_user_meta($GLOBALS['khai_temp_data']['user_id']->ID, 'stage_daftar', 1) ; 
+            update_user_meta($GLOBALS['khai_temp_data']['khai_user']->ID, 'stage_daftar', 1) ; 
             update_user_meta($GLOBALS['khai_temp_data']['khai_user']->ID, 'kariah_id', $my_post['ID']) ; 
         }else{
             $GLOBALS['khai_temp_data']['submitpost']['error'][]['namaKariah'] = 'Nama Kariah telah wujud' ; 

@@ -25,7 +25,7 @@
   let loading = true;
   let fields;
   let xtanggungan = [];
-  let tanggungans = [];
+  let sumbangans = [];
   let visible;
   let open = false;
   let size = "xl";
@@ -33,6 +33,10 @@
   let khai_user;
   let passdata;
   onMount(async () => {
+    let year = new Date().toISOString().substring(0, 4);
+    let month = new Date().toISOString().substring(5, 7);
+    let day = new Date().toISOString().substring(8, 10);
+
     loading = true;
     let myPromise = new Promise(function (myResolve, myReject) {
       unsubscribe = data.subscribe((value) => {
@@ -43,10 +47,10 @@
     passdata = (await myPromise).store.passdata;
     khai_user = (await myPromise).khai_user;
 
-    let apidata2 = new Promise(function (myResolve, myReject) {
+    let apidata = new Promise(function (myResolve, myReject) {
       let dataArray = new FormData();
-      dataArray.append("action", "TambahAhliTanggungan");
-      dataArray.append("id", passdata);
+      dataArray.append("action", "UserKemaskiniAhliTerimaSumbangan");
+      dataArray.append("id", khai_user.ID);
       dataArray.append("kariah_id", khai_user.data.kariah_id);
       fetch(myapiurl, {
         method: "POST",
@@ -59,12 +63,14 @@
         .catch((error) => console.log("error", error));
     });
 
-    tanggungans = JSON.parse(await apidata2).submitpost.tanggungans;
+    sumbangans = JSON.parse(await apidata).submitpost.sumbangans;
     loading = false;
 
     fields = {
       id: passdata,
       kariah_id: khai_user.data.kariah_id,
+      tarikhSumbangan: [year, month, day].join("-"),
+      catatan: "",
     };
   });
 
@@ -76,44 +82,15 @@
     submitpost.post = "";
     submitpost.error = [];
     loading = true;
-    if (e.target.getAttribute("id") == "TanggunganForm") {
-      if (tanggungans.length > 0) {
-        let check = tanggungans.filter((wordx, v) => {
-          if (
-            wordx.noKadPengenalanTanggungan == fields.noKadPengenalanTanggungan
-          ) {
-            return wordx;
-          }
-        });
-
-        if (check.length > 0) {
-          submitpost.post = "true";
-          submitpost.error.push({
-            katalaluanSemula: "Alamat IC telah wujud",
-          });
-          loading = false;
-          return;
-        }
-      }
-
+    if (e.target.getAttribute("id") == "TerimaSumbangan") {
       let apidata = new Promise(function (myResolve, myReject) {
         let dataArray = new FormData();
-        dataArray.append("action", "TambahAhliTanggungan");
+        dataArray.append("action", "TambahTerimaSumbangan");
         dataArray.append("id", fields.id);
         dataArray.append("kariah_id", fields.kariah_id);
-        dataArray.append("namaTanggungan", fields.namaTanggungan);
-        dataArray.append(
-          "noKadPengenalanTanggungan",
-          fields.noKadPengenalanTanggungan
-        );
-        dataArray.append(
-          "pertalianKeluargaTanggungan",
-          fields.pertalianKeluargaTanggungan
-        );
-        dataArray.append(
-          "nomborTelefonTanggungan",
-          fields.nomborTelefonTanggungan
-        );
+        dataArray.append("tarikhSumbangan", fields.tarikhSumbangan);
+        dataArray.append("jumlahSumbangan", fields.jumlahSumbangan);
+        dataArray.append("catatan", fields.catatan);
 
         fetch(myapiurl, {
           method: "POST",
@@ -126,20 +103,22 @@
           .catch((error) => console.log("error", error));
       });
 
-      tanggungans = JSON.parse(await apidata).submitpost.tanggungans;
+      sumbangans = JSON.parse(await apidata).submitpost.sumbangans;
 
-      fields.namaTanggungan = "";
+      fields.tarikhSumbangan = "";
       fields.noKadPengenalanTanggungan = "";
       fields.pertalianKeluargaTanggungan = "";
       fields.nomborTelefonTanggungan = "";
       submitpost.post = "Berjaya Tambah";
-    } else if (e.target.getAttribute("id") == "UpdateTanggunganForm") {
+    } else if (
+      e.target.getAttribute("id") == "UpdateKemaskiniAhliTerimaSumbangan"
+    ) {
       let apidata = new Promise(function (myResolve, myReject) {
         let dataArray = new FormData();
         dataArray.append("action", "KemaskiniAhliTanggungan");
         dataArray.append("id", fields.id);
         dataArray.append("kariah_id", fields.kariah_id);
-        dataArray.append("namaTanggungan", fields.namaTanggungan);
+        dataArray.append("tarikhSumbangan", fields.tarikhSumbangan);
         dataArray.append(
           "noKadPengenalanTanggungan",
           fields.noKadPengenalanTanggungan
@@ -164,9 +143,9 @@
           .catch((error) => console.log("error", error));
       });
 
-      tanggungans = JSON.parse(await apidata).submitpost.tanggungans;
+      sumbangans = JSON.parse(await apidata).submitpost.sumbangans;
 
-      fields.namaTanggungan = "";
+      fields.tarikhSumbangan = "";
       fields.noKadPengenalanTanggungan = "";
       fields.pertalianKeluargaTanggungan = "";
       fields.nomborTelefonTanggungan = "";
@@ -175,19 +154,19 @@
     } else if (e.target.getAttribute("id") == "DeleteTanggungan") {
       if (xtanggungan.length > 0) {
         let myfilter;
-        myfilter = tanggungans.filter((wordx, v) => {
+        myfilter = sumbangans.filter((wordx, v) => {
           if (!xtanggungan[v]) {
             return wordx;
           }
         });
-        tanggungans = myfilter;
+        sumbangans = myfilter;
 
         let apidata = new Promise(function (myResolve, myReject) {
           let dataArray = new FormData();
           dataArray.append("action", "DeleteTanggungan");
           dataArray.append("id", fields.id);
           dataArray.append("kariah_id", fields.kariah_id);
-          dataArray.append("senaraiTanggungan", JSON.stringify(tanggungans));
+          dataArray.append("senaraiTanggungan", JSON.stringify(sumbangans));
           fetch(myapiurl, {
             method: "POST",
             body: dataArray,
@@ -207,7 +186,6 @@
   };
 
   const toggle = (e) => {
-    // console.log(e.target);
     let getid = e.target.parentElement.getAttribute("data-id");
     if (getid == null) {
       getid = e.target.getAttribute("data-id");
@@ -219,24 +197,21 @@
     let myfilter;
 
     if (getid) {
-      myfilter = tanggungans.filter((wordx, v) => {
+      myfilter = sumbangans.filter((wordx, v) => {
         if (getid == v) {
           return wordx;
         }
       });
 
-      fields.namaTanggungan = myfilter[0].namaTanggungan;
+      fields.tarikhSumbangan = myfilter[0].tarikhSumbangan;
       fields.noKadPengenalanTanggungan = myfilter[0].noKadPengenalanTanggungan;
       fields.pertalianKeluargaTanggungan =
         myfilter[0].pertalianKeluargaTanggungan;
       fields.nomborTelefonTanggungan = myfilter[0].nomborTelefonTanggungan;
       open = !open;
     } else {
-      if (
-        e.target.getAttribute("name") == "cancel" ||
-        e.target.getAttribute("class") == "btn-close"
-      ) {
-        fields.namaTanggungan = "";
+      if (e.target.getAttribute("name") == "cancel") {
+        fields.tarikhSumbangan = "";
         fields.noKadPengenalanTanggungan = "";
         fields.pertalianKeluargaTanggungan = "";
         fields.nomborTelefonTanggungan = "";
@@ -284,166 +259,30 @@
       >
     {/if}
   {/if}
-  <form id="TanggunganForm" on:submit|preventDefault={submitHandler}>
-    <input class="form-control" id="id" type="hidden" bind:value={fields.id} />
-    <input
-      class="form-control"
-      id="kariah_id"
-      type="hidden"
-      bind:value={fields.kariah_id}
-    />
-    <div class="row">
-      <div class="col-sm">
-        <label class="form-label" for="namaTanggungan">Nama Tanggungan</label>
-        <input
-          class="form-control {submitpost.error.findIndex((p) =>
-            p.hasOwnProperty('namaTanggungan')
-          ) != -1
-            ? 'is-invalid'
-            : ''}"
-          id="namaTanggungan"
-          type="text"
-          placeholder="Nama Tanggungan"
-          required
-          bind:value={fields.namaTanggungan}
-        />
 
-        <div
-          class="invalid-feedback"
-          data-sb-feedback="namaTanggungan:required"
-        >
-          Nama Tanggungan is required.
-        </div>
-      </div>
-      <div class="col-sm">
-        <label class="form-label" for="noKadPengenalanTanggungan"
-          >No. KP / Sijil Lahir Tanggungan</label
-        >
-        <input
-          class="form-control {submitpost.error.findIndex((p) =>
-            p.hasOwnProperty('noKadPengenalanTanggungan')
-          ) != -1
-            ? 'is-invalid'
-            : ''}"
-          id="noKadPengenalanTanggungan"
-          type="number"
-          min="100000000000"
-          max="999999999999"
-          placeholder="No. Kad Pengenalan Tanggungan"
-          required
-          bind:value={fields.noKadPengenalanTanggungan}
-        />
-
-        <div
-          class="invalid-feedback"
-          data-sb-feedback="noKadPengenalanTanggungan:required"
-        >
-          No. Kad Pengenalan Tanggungan is required.
-        </div>
-      </div>
-    </div>
-
-    <div class="row">
-      <div class="col-sm">
-        <label class="form-label" for="pertalianKeluargaTanggungan"
-          >Pertalian Keluarga</label
-        >
-        <select
-          bind:value={fields.pertalianKeluargaTanggungan}
-          class="form-control"
-          id="pertalianKeluargaTanggungan"
-          name="pertalianKeluargaTanggungan"
-          aria-required="true"
-          aria-invalid="false"
-          required
-        >
-          <option value="">Sila Pilih</option>
-          <option value="PASANGAN">PASANGAN</option>
-          <option value="ANAK">ANAK</option>
-          <option value="IBU/BAPA">IBU/BAPA</option>
-          <option value="DATUK/NENEK">DATUK/NENEK</option>
-          <option value="LAIN-LAIN">LAIN-LAIN</option>
-        </select>
-      </div>
-      <div class="col-sm">
-        <label class="form-label" for="nomborTelefonTanggungan"
-          >Nombor Telefon</label
-        >
-        <input
-          class="form-control {submitpost.error.findIndex((p) =>
-            p.hasOwnProperty('nomborTelefonTanggungan')
-          ) != -1
-            ? 'is-invalid'
-            : ''}"
-          id="nomborTelefonTanggungan"
-          type="number"
-          placeholder="Nombor Telefon"
-          required
-          bind:value={fields.nomborTelefonTanggungan}
-        />
-
-        <div
-          class="invalid-feedback"
-          data-sb-feedback="nomborTelefonTanggungan:required"
-        >
-          Nombor Telefon is required.
-        </div>
-      </div>
-    </div>
-
-    <div class="m-3" />
-
-    <div class="d-grid">
-      <button class="btn btn-success btn-lg" id="submitButton" type="submit"
-        >Tambah</button
-      >
-    </div>
-  </form>
-  <div class="m-2" />
   <form id="DeleteTanggungan" on:submit|preventDefault={submitHandler}>
     <Table responsive>
       <thead>
         <tr>
           <th>#</th>
-          <th>Nama</th>
-          <th>Pertalian</th>
-          <th>No. KP</th>
-          <th>Telefon</th>
-          <th>Umur</th>
-          <th>Yuran</th>
-          <th>Action</th>
+          <th>Tarikh</th>
+          <th>Catatan</th>
+          <th>Jumlah</th>
         </tr>
       </thead>
       <tbody>
-        {#if tanggungans}
-          {#each tanggungans as tanggungan, i}
+        {#if sumbangans}
+          {#each sumbangans as sumbangan, i}
             <tr>
-              <th scope="row"
-                ><input
-                  type="checkbox"
-                  name="checked_id[]"
-                  bind:checked={xtanggungan[i]}
-                /></th
-              >
-              <td>{tanggungan.namaTanggungan}</td>
-              <td>{tanggungan.pertalianKeluargaTanggungan}</td>
-              <td>{tanggungan.noKadPengenalanTanggungan}</td>
-              <td>{tanggungan.nomborTelefonTanggungan}</td>
-              <td>{kiraumur(tanggungan.noKadPengenalanTanggungan)}</td>
-              <td />
-              <td
-                ><a data-id={i} href="#" on:click={(e) => toggle(e)}
-                  ><i class="fa fa-search" /></a
-                ></td
-              >
+              <td>{i + 1}</td>
+              <td>{sumbangan.tarikhSumbangan}</td>
+              <td>{sumbangan.catatan}</td>
+              <td>{sumbangan.jumlahSumbangan}</td>
             </tr>
           {/each}
         {/if}
       </tbody>
     </Table>
-    <button class="btn btn-danger btn-lg" id="submitButton" type="submit"
-      >Buang</button
-    >
   </form>
 
   <div>
@@ -465,25 +304,25 @@
           />
           <div class="row">
             <div class="col-sm">
-              <label class="form-label" for="namaTanggungan"
+              <label class="form-label" for="tarikhSumbangan"
                 >Nama Tanggungan</label
               >
               <input
                 class="form-control {submitpost.error.findIndex((p) =>
-                  p.hasOwnProperty('namaTanggungan')
+                  p.hasOwnProperty('tarikhSumbangan')
                 ) != -1
                   ? 'is-invalid'
                   : ''}"
-                id="namaTanggungan"
+                id="tarikhSumbangan"
                 type="text"
                 placeholder="Nama Tanggungan"
                 required
-                bind:value={fields.namaTanggungan}
+                bind:value={fields.tarikhSumbangan}
               />
 
               <div
                 class="invalid-feedback"
-                data-sb-feedback="namaTanggungan:required"
+                data-sb-feedback="tarikhSumbangan:required"
               >
                 Nama Tanggungan is required.
               </div>

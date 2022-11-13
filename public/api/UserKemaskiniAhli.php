@@ -4,6 +4,8 @@ $GLOBALS['khai_temp_data']['submitpost'] = array();
 $GLOBALS['khai_temp_data']['submitpost']['error'] = array() ; 
 
 
+
+
 if(!$_POST['noKadPengenalanBaru']){ //dapatkan dulu maklumat sebelum paparkan form
     $get_senarai_ahli = $wpdb->get_results( 
         $wpdb->prepare("
@@ -80,7 +82,7 @@ if(!$_POST['noKadPengenalanBaru']){ //dapatkan dulu maklumat sebelum paparkan fo
         update_user_meta($check, 'nomborTelefon', $_POST['nomborTelefon']) ; 
          update_user_meta($check, 'alamat', $_POST['alamat']) ; 
           update_user_meta($check, 'catatan', $_POST['catatan']) ; 
-        update_user_meta($check, 'stage_daftar', 1) ; 
+       
         update_user_meta( $check, 'role', $_POST['jenisAhli'] );
         update_user_meta( $check, 'kariah_id', $_POST['kariah_id'] );
         if($_POST['nomborKeahlian'] == ""){
@@ -96,7 +98,9 @@ if(!$_POST['noKadPengenalanBaru']){ //dapatkan dulu maklumat sebelum paparkan fo
             update_user_meta( $check, 'wp_capabilities', array('asnaf' => 3) );
         }
 
-    $GLOBALS['khai_temp_data']['submitpost']['id'] = $_POST['id'] ;
+        update_user_meta($check, 'stage_daftar', 3) ; 
+        $GLOBALS['khai_temp_data']['khai_user']->stage_daftar = 3;
+        $GLOBALS['khai_temp_data']['submitpost']['id'] = $_POST['id'] ;
     
     }else{
     $GLOBALS['khai_temp_data']['submitpost']['error'][] = array( "emel"=> "Emel ini telah digunakan") ; 

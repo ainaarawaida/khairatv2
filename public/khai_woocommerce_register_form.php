@@ -1,8 +1,8 @@
 <p class="woocommerce-form-row woocommerce-form-row--wide form-row form-row-wide">
     <label for="type_reg"><?php esc_html_e( 'Type Registration', 'woocommerce' ); ?>&nbsp;<span class="required">*</span></label>
     <select name="type_reg" id="type_reg" class="form-control woocommerce-Input woocommerce-Input--select input-select" required>
-        <option value="pentadbir">Daftar Pentadbir</option>
         <option value="ahli">Daftar Ahli</option>
+        <option value="pentadbir">Daftar Pentadbir</option>
     </select>
 
 </p>
