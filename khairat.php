@@ -58,7 +58,6 @@ function deactivate_khairat() {
 
 register_activation_hook( __FILE__, 'activate_khairat' );
 register_deactivation_hook( __FILE__, 'deactivate_khairat' );
-
 /**
  * The core plugin class that is used to define internationalization,
  * admin-specific hooks, and public-facing site hooks.
