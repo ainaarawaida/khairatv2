@@ -96,6 +96,18 @@
           </div>
           Maklumat Bayaran
         </a>
+        <a
+          class="nav-link"
+          class:active={activeMenu === "User Khairat - Maklumat Tuntutan"}
+          on:click|preventDefault={() =>
+            dispatch("menuChange", "User Khairat - Maklumat Tuntutan")}
+          href="User Khairat - Maklumat Tuntutan"
+        >
+          <div class="sb-nav-link-icon">
+            <i class="fas fa-tachometer-alt" />
+          </div>
+          Maklumat Tuntutan
+        </a>
 
         <div class="sb-sidenav-menu-heading">Konfigurasi</div>
         <a

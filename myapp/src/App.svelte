@@ -28,6 +28,7 @@
 
   import UserKhairat from "./parts/AhliKhairat/UserKhairat.svelte";
   import UserKemaskiniAhliMaklumatBayaranAhli from "./parts/AhliKhairat/UserKemaskiniAhliMaklumatBayaranAhli.svelte";
+  import UserKemaskiniAhliTerimaSumbangan from "./parts/AhliKhairat/UserKemaskiniAhliTerimaSumbangan.svelte";
 
   import JenisYuran from "./parts/Yuran/JenisYuran.svelte";
   import TambahJenisYuran from "./parts/Yuran/TambahJenisYuran.svelte";
@@ -196,6 +197,8 @@
           <PilihPakej on:menuChange={menuChange} />
         {:else if activeMenu === "User Khairat - Maklumat Bayaran"}
           <UserKemaskiniAhliMaklumatBayaranAhli on:menuChange={menuChange} />
+        {:else if activeMenu === "User Khairat - Maklumat Tuntutan"}
+          <UserKemaskiniAhliTerimaSumbangan on:menuChange={menuChange} />
         {:else if activeMenu === "Ahli Khairat - Senarai Ahli"}
           <SenaraiAhli {passdata} on:menuChange={menuChange} />
         {:else if activeMenu === "Ahli Khairat - Senarai Ahli Tidak Aktif"}

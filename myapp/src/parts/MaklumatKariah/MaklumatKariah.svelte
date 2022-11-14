@@ -12,6 +12,7 @@
 
   let khai_user;
 
+  let role;
   let fields = {};
   let submitpost = {
     error: [],
@@ -20,9 +21,13 @@
   let visible = true;
   let unsubscribe;
   onMount(async () => {
-    unsubscribe = data.subscribe((value) => {
-      khai_user = value.khai_user;
+    let myPromise = new Promise(function (myResolve, myReject) {
+      unsubscribe = data.subscribe((value) => {
+        khai_user = value.khai_user;
+        myResolve(value); // when successful
+      });
     });
+    khai_user = (await myPromise).khai_user;
 
     fields = {
       id: khai_user.ID,
@@ -31,6 +36,8 @@
       alamatKariah: khai_user.data.alamatKariah,
       sitePageUrl: khai_user.data.sitePageUrl,
     };
+
+    role = khai_user.data.role;
   });
 
   onDestroy(() => {
@@ -124,6 +131,7 @@
         <div class="mb-3">
           <label class="form-label" for="namaKariah">Nama Kariah</label>
           <input
+            readonly={role != "1" ? true : false}
             class="form-control {submitpost.error.findIndex((p) =>
               p.hasOwnProperty('namaKariah')
             ) != -1
@@ -154,6 +162,7 @@
             style="height: 10rem;"
             data-sb-validations="required"
             required
+            readonly={role != "1" ? true : false}
             bind:value={fields.alamatKariah}
           />
           <div
@@ -177,17 +186,21 @@
             data-sb-validations="required"
             bind:value={fields.sitePageUrl}
             required
+            readonly={role != "1" ? true : false}
           />
           <div class="invalid-feedback" data-sb-feedback="sitePageUrl:required">
             Site Page URL is required.
           </div>
         </div>
-
-        <div class="d-grid">
-          <button class="btn btn-primary btn-lg" id="submitButton" type="submit"
-            >Submit</button
-          >
-        </div>
+        {#if role == "1"}
+          <div class="d-grid">
+            <button
+              class="btn btn-primary btn-lg"
+              id="submitButton"
+              type="submit">Submit</button
+            >
+          </div>
+        {/if}
       </form>
     </div>
   </div>

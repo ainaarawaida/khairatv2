@@ -31,7 +31,7 @@
   <div class="container-fluid px-4">
     <div class="row">
       <div class="col">
-        <div class="text-center"><h1>Action Step</h1></div>
+        <div class="text-center"><h1>Langkah Turutan</h1></div>
         <div class="row">
           <div
             class="text-center col-sm p-2 m-1 bg-{khai_user.data.stage_daftar >=

@@ -67,7 +67,7 @@ update_post_meta($_POST['id'], '_price', $_POST['jumlahYuran']) ;
 update_post_meta($_POST['id'], 'mulaYuran', $_POST['mulaYuran']) ; 
 update_post_meta($_POST['id'], 'statusYuran', $_POST['statusYuran']) ; 
 update_post_meta($_POST['id'], 'paparanYuran', $_POST['paparanYuran']) ; 
-update_post_meta($_POST['id'], '_sold_individually', 'yes') ; 
+// update_post_meta($_POST['id'], '_sold_individually', 'yes') ; 
 
 //hide product
 $terms = array( 'exclude-from-catalog', 'exclude-from-search' );

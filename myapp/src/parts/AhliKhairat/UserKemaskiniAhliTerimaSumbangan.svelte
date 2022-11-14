@@ -260,163 +260,170 @@
     {/if}
   {/if}
 
-  <form id="DeleteTanggungan" on:submit|preventDefault={submitHandler}>
-    <Table responsive>
-      <thead>
-        <tr>
-          <th>#</th>
-          <th>Tarikh</th>
-          <th>Catatan</th>
-          <th>Jumlah</th>
-        </tr>
-      </thead>
-      <tbody>
-        {#if sumbangans}
-          {#each sumbangans as sumbangan, i}
+  <main>
+    <div class="container-fluid px-4">
+      <form id="DeleteTanggungan" on:submit|preventDefault={submitHandler}>
+        <Table responsive>
+          <thead>
             <tr>
-              <td>{i + 1}</td>
-              <td>{sumbangan.tarikhSumbangan}</td>
-              <td>{sumbangan.catatan}</td>
-              <td>{sumbangan.jumlahSumbangan}</td>
+              <th>#</th>
+              <th>Tarikh</th>
+              <th>Catatan</th>
+              <th>Jumlah</th>
             </tr>
-          {/each}
-        {/if}
-      </tbody>
-    </Table>
-  </form>
-
-  <div>
-    <Modal size="lg" isOpen={open} {toggle}>
-      <form id="UpdateTanggunganForm" on:submit|preventDefault={submitHandler}>
-        <ModalHeader {toggle}>Maklumat Tanggungan</ModalHeader>
-        <ModalBody>
-          <input
-            class="form-control"
-            id="id"
-            type="hidden"
-            bind:value={fields.id}
-          />
-          <input
-            class="form-control"
-            id="kariah_id"
-            type="hidden"
-            bind:value={fields.kariah_id}
-          />
-          <div class="row">
-            <div class="col-sm">
-              <label class="form-label" for="tarikhSumbangan"
-                >Nama Tanggungan</label
-              >
-              <input
-                class="form-control {submitpost.error.findIndex((p) =>
-                  p.hasOwnProperty('tarikhSumbangan')
-                ) != -1
-                  ? 'is-invalid'
-                  : ''}"
-                id="tarikhSumbangan"
-                type="text"
-                placeholder="Nama Tanggungan"
-                required
-                bind:value={fields.tarikhSumbangan}
-              />
-
-              <div
-                class="invalid-feedback"
-                data-sb-feedback="tarikhSumbangan:required"
-              >
-                Nama Tanggungan is required.
-              </div>
-            </div>
-            <div class="col-sm">
-              <label class="form-label" for="noKadPengenalanTanggungan"
-                >No. KP / Sijil Lahir Tanggungan</label
-              >
-              <input
-                class="form-control {submitpost.error.findIndex((p) =>
-                  p.hasOwnProperty('noKadPengenalanTanggungan')
-                ) != -1
-                  ? 'is-invalid'
-                  : ''}"
-                id="noKadPengenalanTanggungan"
-                type="number"
-                min="100000000000"
-                max="999999999999"
-                placeholder="No. Kad Pengenalan Tanggungan"
-                required
-                bind:value={fields.noKadPengenalanTanggungan}
-              />
-
-              <div
-                class="invalid-feedback"
-                data-sb-feedback="noKadPengenalanTanggungan:required"
-              >
-                No. Kad Pengenalan Tanggungan is required.
-              </div>
-            </div>
-          </div>
-
-          <div class="row">
-            <div class="col-sm">
-              <label class="form-label" for="pertalianKeluargaTanggungan"
-                >Pertalian Keluarga</label
-              >
-              <select
-                bind:value={fields.pertalianKeluargaTanggungan}
-                class="form-control"
-                id="pertalianKeluargaTanggungan"
-                name="pertalianKeluargaTanggungan"
-                aria-required="true"
-                aria-invalid="false"
-                required
-              >
-                <option value="">Sila Pilih</option>
-                <option value="PASANGAN">PASANGAN</option>
-                <option value="ANAK">ANAK</option>
-                <option value="IBU/BAPA">IBU/BAPA</option>
-                <option value="DATUK/NENEK">DATUK/NENEK</option>
-                <option value="LAIN-LAIN">LAIN-LAIN</option>
-              </select>
-            </div>
-            <div class="col-sm">
-              <label class="form-label" for="nomborTelefonTanggungan"
-                >Nombor Telefon</label
-              >
-              <input
-                class="form-control {submitpost.error.findIndex((p) =>
-                  p.hasOwnProperty('nomborTelefonTanggungan')
-                ) != -1
-                  ? 'is-invalid'
-                  : ''}"
-                id="nomborTelefonTanggungan"
-                type="number"
-                placeholder="Nombor Telefon"
-                required
-                bind:value={fields.nomborTelefonTanggungan}
-              />
-
-              <div
-                class="invalid-feedback"
-                data-sb-feedback="nomborTelefonTanggungan:required"
-              >
-                Nombor Telefon is required.
-              </div>
-            </div>
-          </div>
-
-          <div class="m-3" />
-        </ModalBody>
-        <ModalFooter>
-          <Button type="submit" color="primary" on:click={toggle}
-            >Kemaskini</Button
-          >
-          <Button
-            type="button"
-            name="cancel"
-            color="secondary"
-            on:click={toggle}>Cancel</Button
-          >
-        </ModalFooter>
+          </thead>
+          <tbody>
+            {#if sumbangans}
+              {#each sumbangans as sumbangan, i}
+                <tr>
+                  <td>{i + 1}</td>
+                  <td>{sumbangan.tarikhSumbangan}</td>
+                  <td>{sumbangan.catatan}</td>
+                  <td>{sumbangan.jumlahSumbangan}</td>
+                </tr>
+              {/each}
+            {/if}
+          </tbody>
+        </Table>
       </form>
-    </Modal>
-  </div>
+
+      <div>
+        <Modal size="lg" isOpen={open} {toggle}>
+          <form
+            id="UpdateTanggunganForm"
+            on:submit|preventDefault={submitHandler}
+          >
+            <ModalHeader {toggle}>Maklumat Tanggungan</ModalHeader>
+            <ModalBody>
+              <input
+                class="form-control"
+                id="id"
+                type="hidden"
+                bind:value={fields.id}
+              />
+              <input
+                class="form-control"
+                id="kariah_id"
+                type="hidden"
+                bind:value={fields.kariah_id}
+              />
+              <div class="row">
+                <div class="col-sm">
+                  <label class="form-label" for="tarikhSumbangan"
+                    >Nama Tanggungan</label
+                  >
+                  <input
+                    class="form-control {submitpost.error.findIndex((p) =>
+                      p.hasOwnProperty('tarikhSumbangan')
+                    ) != -1
+                      ? 'is-invalid'
+                      : ''}"
+                    id="tarikhSumbangan"
+                    type="text"
+                    placeholder="Nama Tanggungan"
+                    required
+                    bind:value={fields.tarikhSumbangan}
+                  />
+
+                  <div
+                    class="invalid-feedback"
+                    data-sb-feedback="tarikhSumbangan:required"
+                  >
+                    Nama Tanggungan is required.
+                  </div>
+                </div>
+                <div class="col-sm">
+                  <label class="form-label" for="noKadPengenalanTanggungan"
+                    >No. KP / Sijil Lahir Tanggungan</label
+                  >
+                  <input
+                    class="form-control {submitpost.error.findIndex((p) =>
+                      p.hasOwnProperty('noKadPengenalanTanggungan')
+                    ) != -1
+                      ? 'is-invalid'
+                      : ''}"
+                    id="noKadPengenalanTanggungan"
+                    type="number"
+                    min="100000000000"
+                    max="999999999999"
+                    placeholder="No. Kad Pengenalan Tanggungan"
+                    required
+                    bind:value={fields.noKadPengenalanTanggungan}
+                  />
+
+                  <div
+                    class="invalid-feedback"
+                    data-sb-feedback="noKadPengenalanTanggungan:required"
+                  >
+                    No. Kad Pengenalan Tanggungan is required.
+                  </div>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-sm">
+                  <label class="form-label" for="pertalianKeluargaTanggungan"
+                    >Pertalian Keluarga</label
+                  >
+                  <select
+                    bind:value={fields.pertalianKeluargaTanggungan}
+                    class="form-control"
+                    id="pertalianKeluargaTanggungan"
+                    name="pertalianKeluargaTanggungan"
+                    aria-required="true"
+                    aria-invalid="false"
+                    required
+                  >
+                    <option value="">Sila Pilih</option>
+                    <option value="PASANGAN">PASANGAN</option>
+                    <option value="ANAK">ANAK</option>
+                    <option value="IBU/BAPA">IBU/BAPA</option>
+                    <option value="DATUK/NENEK">DATUK/NENEK</option>
+                    <option value="LAIN-LAIN">LAIN-LAIN</option>
+                  </select>
+                </div>
+                <div class="col-sm">
+                  <label class="form-label" for="nomborTelefonTanggungan"
+                    >Nombor Telefon</label
+                  >
+                  <input
+                    class="form-control {submitpost.error.findIndex((p) =>
+                      p.hasOwnProperty('nomborTelefonTanggungan')
+                    ) != -1
+                      ? 'is-invalid'
+                      : ''}"
+                    id="nomborTelefonTanggungan"
+                    type="number"
+                    placeholder="Nombor Telefon"
+                    required
+                    bind:value={fields.nomborTelefonTanggungan}
+                  />
+
+                  <div
+                    class="invalid-feedback"
+                    data-sb-feedback="nomborTelefonTanggungan:required"
+                  >
+                    Nombor Telefon is required.
+                  </div>
+                </div>
+              </div>
+
+              <div class="m-3" />
+            </ModalBody>
+            <ModalFooter>
+              <Button type="submit" color="primary" on:click={toggle}
+                >Kemaskini</Button
+              >
+              <Button
+                type="button"
+                name="cancel"
+                color="secondary"
+                on:click={toggle}>Cancel</Button
+              >
+            </ModalFooter>
+          </form>
+        </Modal>
+      </div>
+    </div>
+  </main>
 {/if}

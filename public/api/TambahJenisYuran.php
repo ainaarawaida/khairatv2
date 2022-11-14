@@ -25,7 +25,7 @@ update_post_meta($product_id, 'jenisYuran', $_POST['jenisYuran']) ;
 update_post_meta($product_id, 'mulaYuran', $_POST['mulaYuran']) ; 
 update_post_meta($product_id, 'statusYuran', $_POST['statusYuran']) ; 
 update_post_meta($product_id, 'paparanYuran', $_POST['paparanYuran']) ; 
-update_post_meta($product_id, '_sold_individually', 'yes') ; 
+// update_post_meta($product_id, '_sold_individually', 'yes') ; 
 
 //hide product
 $terms = array( 'exclude-from-catalog', 'exclude-from-search' );

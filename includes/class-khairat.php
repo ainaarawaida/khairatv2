@@ -178,16 +178,15 @@ class Khairat {
 		$this->loader->add_filter('script_loader_tag', $plugin_public, 'add_type_attribute' , 10, 3); 
 		$this->loader->add_action( 'wp_head', $plugin_public, 'khai_wp_head' );
 		$this->loader->add_action( 'template_redirect', $plugin_public, 'khai_template_redirect', 99 );
-
 		//woo register
 		$this->loader->add_action( 'woocommerce_register_form', $plugin_public, 'khai_woocommerce_register_form' );
 		$this->loader->add_action( 'woocommerce_created_customer', $plugin_public, 'khai_woocommerce_created_customer', 10, 3 );
-
 		//logout redirect
 		$this->loader->add_action('check_admin_referer', $plugin_public, 'khai_check_admin_referer', 10, 2);
 		$this->loader->add_filter( 'woocommerce_add_to_cart_redirect', $plugin_public, 'khai_woocommerce_add_to_cart_redirect' );
-		$this->loader->add_filter( 'woocommerce_add_to_cart_validation', $plugin_public, 'khai_woocommerce_add_to_cart_validation', 9999, 2 );
-	
+		
+		//pembelian satu item saja
+		// $this->loader->add_filter( 'woocommerce_add_to_cart_validation', $plugin_public, 'khai_woocommerce_add_to_cart_validation', 9999, 2 );
 	
 		$this->loader->add_filter( 'woocommerce_checkout_must_be_logged_in_message', $plugin_public, 'khai_woocommerce_checkout_must_be_logged_in_message', 10);
 		$this->loader->add_action('woocommerce_before_checkout_form', $plugin_public, 'khai_woocommerce_before_checkout_form', 10,1);

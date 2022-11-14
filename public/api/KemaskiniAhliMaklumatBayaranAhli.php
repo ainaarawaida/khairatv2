@@ -47,7 +47,8 @@ $curr_date = date("Y-m-d");
 // deb($curr_date);
 $senarai_yuran = array() ;
 
-if($pakej){
+
+if(count($pakej) > 0){
     foreach($get_jenisyuran AS $key => $val){
     if(!in_array($val->ID, $pakej)){
         continue;
